@@ -4,7 +4,14 @@ var { buildSchema } = require('graphql');
 
 var schema = buildSchema(`
   type Query {
-    hello: String
+    user(id: Int!): Person
+    users(shark: String): [Person]
+  },
+  type Person {
+    id: Int
+    name: String
+    age: Int
+    shark: String
   }
 `);
 
