@@ -12,6 +12,9 @@ var schema = buildSchema(`
     name: String
     age: Int
     shark: String
+  },
+  type Mutation {
+    updateUser(id: Int!, name: String!, age: String): Person
   }
 `);
 // Sample users
@@ -64,9 +67,22 @@ var retrieveUsers = function(args) {
   }
 }
 
+// Update a user and return new user details
+var updateUser = function({id, name, age}) {
+  users.map(user => {
+    if (user.id === id) {
+      user.name = name;
+      user.age = age;
+      return user;
+    }
+  });
+  return users.filter(user => user.id === id)[0];
+}
+
 var root = {
   user: getUser,
-  users: retrieveUsers
+  users: retrieveUsers,
+  updateUser: updateUser
 };
 
 var app = express();
